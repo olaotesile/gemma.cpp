@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "io/blob_store.h"
+#include "io/blob_finder.h"
 
 #include <stdio.h>
 
@@ -32,10 +32,10 @@ namespace gcpp {
 namespace {
 
 #if !HWY_TEST_STANDALONE
-class BlobStoreTest : public testing::Test {};
+class BlobFinderTest : public testing::Test {};
 #endif
 
-TEST(BlobStoreTest, TestReadWrite) {
+TEST(BlobFinderTest, TestReadWrite) {
   ThreadingArgs threading_args;
   ThreadingContext ctx(threading_args);
 
@@ -59,7 +59,7 @@ TEST(BlobStoreTest, TestReadWrite) {
 
   std::fill(buffer.begin(), buffer.end(), 0);
 
-  const BlobReader reader(path);
+  const BlobFinder reader(path);
 
   HWY_ASSERT_EQ(reader.Keys().size(), 2);
   HWY_ASSERT_STRING_EQ(reader.Keys()[0].c_str(), keyA.c_str());
@@ -92,7 +92,7 @@ TEST(BlobStoreTest, TestReadWrite) {
 }
 
 // Ensures padding works for any number of random-sized blobs.
-TEST(BlobStoreTest, TestNumBlobs) {
+TEST(BlobFinderTest, TestNumBlobs) {
   ThreadingArgs threading_args;
   ThreadingContext ctx(threading_args);
   hwy::RandomState rng;
@@ -126,7 +126,7 @@ TEST(BlobStoreTest, TestNumBlobs) {
     HWY_ASSERT(blobs.size() == num_blobs);
     writer.Finalize();
 
-    BlobReader reader(path);
+    BlobFinder reader(path);
     HWY_ASSERT_EQ(reader.Keys().size(), num_blobs);
 
     ParallelFor(

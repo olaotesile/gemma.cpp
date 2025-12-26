@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "io/blob_store.h"
+#include "io/blob_finder.h"
 
 #include <stddef.h>
 #include <stdint.h>

@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef THIRD_PARTY_GEMMA_CPP_IO_BLOB_STORE_H_
-#define THIRD_PARTY_GEMMA_CPP_IO_BLOB_STORE_H_
+#ifndef THIRD_PARTY_GEMMA_CPP_IO_BLOB_FINDER_H_
+#define THIRD_PARTY_GEMMA_CPP_IO_BLOB_FINDER_H_
 
 // Reads/writes arrays of bytes from/to file.
 
@@ -48,11 +48,11 @@ struct BlobRange {
 // faster lookups.
 // TODO(janwas): rename to BlobFinder or similar.
 // Thread-safe: it is safe to concurrently call all methods except `CloseFile`.
-class BlobReader {
+class BlobFinder {
  public:
   // Acquires ownership of `file` (which must be non-null) and reads its header.
   // Aborts on error.
-  explicit BlobReader(const Path& blob_path);
+  explicit BlobFinder(const Path& blob_path);
 
   const Path& blob_path() const { return blob_path_; }
 
@@ -136,4 +136,4 @@ class BlobWriter {
 
 }  // namespace gcpp
 
-#endif  // THIRD_PARTY_GEMMA_CPP_IO_BLOB_STORE_H_
+#endif  // THIRD_PARTY_GEMMA_CPP_IO_BLOB_FINDER_H_
